@@ -1,14 +1,3 @@
-// auto focus on grid after pressing restart
-// pop out from screen like effect for boxes
-// create three levels, changing number of rows, or may be even telling which of them are correct and which are correct but not at right place
-// push on git
-// can also add a sun that follows the path from real time sun position and scattering the light on the screen.
-// will have to code the sun as images wont give the desired effect. Or may this can be a completely different project.
-// when complete, host somewhere, may be on riju's server, or get my own, or may be on play store.
-// also we can create a new project with similar boxes covering the whole screen but the size would be much smaller and they tranlates on z axis when hovered.
-// or may be the in the direction from where the mouse is coming. it might create a good effect.
-// or may we can use small round circles instead of boxes or may be we can gives options to the user for choosing traingle, circle or square.
-
 const grid = document.querySelector('.grid');
 const resultDisplay = document.getElementById('game-result');
 const restartButton = document.querySelector('.restart-button');
