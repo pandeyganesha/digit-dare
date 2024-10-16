@@ -13,7 +13,6 @@ function generateSecretNumber() {
     for (let i = 0; i < 5; i++) {
         number += Math.floor(Math.random() * 10); // Generate a random number between 0 and 9
     }
-    console.log("Secret Number:", number); // For debugging purposes
     return number;
 }
 
@@ -47,7 +46,7 @@ function checkGuess() {
     });
 
     rowIndicators[0].textContent = correctPositions;
-    rowIndicators[0].style.backgroundColor = 'lightgreen'
+    rowIndicators[0].style.backgroundColor = 'lightblue';
     rowIndicators[1].textContent = correctNumbers;
     rowIndicators[1].style.backgroundColor = 'orange'
 
@@ -76,7 +75,6 @@ function handleRestart() {
     grid.querySelectorAll('.cell').forEach(cell => cell.textContent = '');
     grid.querySelectorAll('.indicator').forEach(indicator => indicator.style.backgroundColor = indicatorColor)
     resultDisplay.style.display = 'none';
-    // restartButton.style.display = 'none';
 }
 
 document.addEventListener('keydown', (e) => {
@@ -95,3 +93,24 @@ document.addEventListener('keydown', (e) => {
 });
 
 restartButton.addEventListener('click', handleRestart);
+
+window.addEventListener('load', () => {
+    const rulesModal = document.querySelector('.rules-modal');
+    rulesModal.classList.add('expand');
+    rulesModal.style.display = 'flex';
+});
+
+const skipButton = document.querySelector('.skip-button');
+const rulesModal = document.querySelector('.rules-modal');
+
+skipButton.addEventListener('click', () => {
+    if (rulesModal.classList.contains('expand')) {
+        rulesModal.classList.remove('expand');
+    }
+
+    rulesModal.classList.add('shrink');
+
+    setTimeout(() => {
+        rulesModal.style.display = 'none';
+    }, 300);
+});
