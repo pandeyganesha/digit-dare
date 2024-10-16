@@ -90,8 +90,6 @@ function handleRestart() {
 
     // Remove focus from the restart button
     restartButton.blur();
-    // Move that focus to somewhere else in the body (This is to ensure that the focus will not with the restart button again)
-    document.body.focus();
 }
 
 document.addEventListener('keydown', (e) => {
