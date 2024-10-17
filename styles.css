@@ -24,7 +24,6 @@ html {
     background-color: var(--base-color);
     color: var(--text-color);
 }
-
 /* START FOR CHANGING THEME MODE */
 label {
     width: 80px;
@@ -83,13 +82,14 @@ input:checked~.moon {
     pointer-events: none;
     background-color: var(--base-color);
     clip-path: circle(0% at 50% 50%);
-    transition: clip-path 1s ease-in-out, background-color 1s ease-in-out;
+    transition: clip-path 0.6s ease-in-out, background-color 0.6s ease-in-out;
 }
 
 .darkmode .theme-effect {
     background-color: var(--base-color);
     clip-path: circle(120% at 50% 50%);
 }
+
 /* END FOR CHANGING THEME MODE */
 
 .game-container {
@@ -236,7 +236,6 @@ input:checked~.moon {
     color: #fff;
     margin: 8px 0;
 }
-
 
 .skip-button {
     margin-top: 20px;

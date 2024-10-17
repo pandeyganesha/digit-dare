@@ -8,44 +8,34 @@ let currentRow = 0;
 let currentGuess = [];
 let gameOver = false;
 
-// START FOR CHANGING THEME MODE 
+// START FOR CHANGING THEME MODE
 let darkmode = localStorage.getItem('darkmode')
 const themeSwitch = document.getElementById('theme-switch');
 const themeEffect = document.querySelector('.theme-effect');
 
 const enableDarkmode = () => {
-    // Trigger ripple first, then change color
-    themeEffect.style.transition = 'clip-path 0.6s ease-in-out, background-color 0.6s ease-in-out';
+    document.body.classList.add('darkmode');
+    document.documentElement.classList.add('darkmode'); 
+    themeEffect.style.transition = 'clip-path 0.6s ease-in-out, background 0.6s ease-in-out';
+    themeEffect.style.background = 'rgba(18, 18, 19, 0.1)';
     themeEffect.style.clipPath = 'circle(120% at 50% 50%)';
-
-    // Delay color change to sync with the ripple animation
-    setTimeout(() => {
-        document.body.classList.add('darkmode');
-        document.documentElement.classList.add('darkmode'); 
-        themeEffect.style.background = 'rgba(18, 18, 19, 0.1)';
-        localStorage.setItem('darkmode', 'active');
-    }, 200);  // Adjusted delay to 200ms to match the 0.6s ripple
+    localStorage.setItem('darkmode', 'active');
 }
 
 const disableDarkmode = () => {
-    // Trigger ripple first, then change color
-    themeEffect.style.transition = 'clip-path 0.6s ease-in-out, background-color 0.6s ease-in-out';
+    document.body.classList.remove('darkmode');
+    document.documentElement.classList.remove('darkmode'); 
+    themeEffect.style.transition = 'clip-path 0.6s ease-in-out, background 0.6s ease-in-out';
+    themeEffect.style.background = 'rgba(243, 234, 234, 0.1)';
     themeEffect.style.clipPath = 'circle(0% at 50% 50%)';
-
-    // Delay color change to sync with the ripple animation
-    setTimeout(() => {
-        document.body.classList.remove('darkmode');
-        document.documentElement.classList.remove('darkmode'); 
-        themeEffect.style.background = 'rgba(243, 234, 234, 0.1)';
-        localStorage.setItem('darkmode', null);
-    }, 200);  // Adjusted delay to 200ms to match the 0.6s ripple
+    localStorage.setItem('darkmode', null);
 }
 
 if(darkmode == "active") enableDarkmode()
 
 themeSwitch.addEventListener('click', function(){
     darkmode = localStorage.getItem('darkmode')
-    darkmode !== "active" ? enableDarkmode() : disableDarkmode()
+    darkmode!=="active" ? enableDarkmode() : disableDarkmode()
 })
 // END FOR CHANGING THEME MODE
 
