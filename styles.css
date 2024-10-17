@@ -1,11 +1,13 @@
-:root{
+:root {
     --base-color: rgb(243, 234, 234);
     --text-color: #111528;
 }
+
 .darkmode {
     --base-color: #121213;
     --text-color: #fff;
 }
+
 body,
 html {
     margin: 0;
@@ -111,7 +113,7 @@ html {
 
 .rules-modal {
     position: fixed;
-    background-color: var(--base-color);
+    background-color: rgba(18, 18, 19, 1);
     top: 0;
     left: 0;
     width: 100%;

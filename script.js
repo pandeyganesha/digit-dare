@@ -106,6 +106,9 @@ function handleRestart() {
     grid.querySelectorAll('.cell').forEach(cell => cell.textContent = '');
     grid.querySelectorAll('.indicator').forEach(indicator => indicator.style.backgroundColor = indicatorColor)
     resultDisplay.style.display = 'none';
+
+    // Remove focus from the restart button
+    restartButton.blur();
 }
 
 document.addEventListener('keydown', (e) => {
