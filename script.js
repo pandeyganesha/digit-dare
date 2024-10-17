@@ -8,6 +8,37 @@ let currentRow = 0;
 let currentGuess = [];
 let gameOver = false;
 
+// START FOR CHANGING THEME MODE
+let darkmode = localStorage.getItem('darkmode')
+const themeSwitch = document.getElementById('theme-switch')
+const themeEffect = document.querySelector('.theme-effect');
+
+const enableDarkmode = () => {
+    document.body.classList.add('darkmode');
+    document.documentElement.classList.add('darkmode'); 
+    themeEffect.style.transition = 'clip-path 1s ease-in-out, background 1s ease-in-out';
+    themeEffect.style.background = 'rgba(18, 18, 19, 0.1)';
+    themeEffect.style.clipPath = 'circle(120% at 50% 50%)';
+    localStorage.setItem('darkmode', 'active');
+}
+
+const disableDarkmode = () => {
+    document.body.classList.remove('darkmode');
+    document.documentElement.classList.remove('darkmode'); 
+    themeEffect.style.transition = 'clip-path 1s ease-in-out, background 1s ease-in-out';
+    themeEffect.style.background = 'rgba(243, 234, 234, 0.1)';
+    themeEffect.style.clipPath = 'circle(0% at 50% 50%)';
+    localStorage.setItem('darkmode', null);
+}
+
+if(darkmode == "active") enableDarkmode()
+
+themeSwitch.addEventListener("click", () =>{
+    darkmode = localStorage.getItem('darkmode')
+    darkmode!=="active" ? enableDarkmode() : disableDarkmode()
+})
+// END FOR CHANGING THEME MODE
+
 function generateSecretNumber() {
     let number = '';
     for (let i = 0; i < 5; i++) {
