@@ -16,18 +16,12 @@ const themeEffect = document.querySelector('.theme-effect');
 const enableDarkmode = () => {
     document.body.classList.add('darkmode');
     document.documentElement.classList.add('darkmode'); 
-    themeEffect.style.transition = 'clip-path 0.6s ease-in-out, background 0.6s ease-in-out';
-    themeEffect.style.background = 'rgba(18, 18, 19, 0.1)';
-    themeEffect.style.clipPath = 'circle(120% at 50% 50%)';
     localStorage.setItem('darkmode', 'active');
 }
 
 const disableDarkmode = () => {
     document.body.classList.remove('darkmode');
     document.documentElement.classList.remove('darkmode'); 
-    themeEffect.style.transition = 'clip-path 0.6s ease-in-out, background 0.6s ease-in-out';
-    themeEffect.style.background = 'rgba(243, 234, 234, 0.1)';
-    themeEffect.style.clipPath = 'circle(0% at 50% 50%)';
     localStorage.setItem('darkmode', null);
 }
 
