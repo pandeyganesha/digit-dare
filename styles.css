@@ -1,14 +1,118 @@
-body, html {
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body,
+html {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: rgb(238, 232, 232);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #121213;
-    color: #fff;
-    font-family: 'Arial', sans-serif;
 }
+
+/* START MODE */
+.mode-tog {
+    background-color: rgb(238, 232, 232);
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    z-index: 2;
+    transition: 600;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+.mode-tog.active {
+    background-color: rgba(18, 18, 19, 1);
+    transition: 600ms;
+    opacity: 1;
+}
+
+.container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 30px;
+    top: 30px;
+    width: 30px;
+    height: 30px;
+    /* background: #e8336f */
+}
+
+.dark-mode {
+    position: relative;
+    transform: scale(0);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 250vw;
+    height: 250vw;
+    border-radius: 50%;
+    background-color: rgba(18, 18, 19, 1)  ;
+    transition: 600ms ease-in-out;
+    display: flex;
+    flex: 0 0 auto;
+}
+
+.dark-mode.active {
+    transform: scale(1);
+    transition: 600ms ease-in-out;
+}
+
+.game-container,
+.mode-label {
+    color: rgb(238, 232, 232);
+    position: absolute;
+    mix-blend-mode: difference;
+}
+
+@media screen and (max-width: 600px) {
+    .dark-mode {
+        width: 250vh;
+        height: 250vh;
+    }
+}
+
+.icon {
+    font-size: 45px;
+    transition: opacity 0.5s ease;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.sun-icon {
+    color: #232221;
+}
+
+.moon-icon {
+    opacity: 0;
+    color: #d4cdc6;
+}
+
+.mode-tog.active .moon-icon {
+    opacity: 1;
+    transition: 1s;
+}
+
+.mode-tog.active .sun-icon {
+    opacity: 0;
+    transition: 1s;
+}
+/* END MODE */
 
 .game-container {
     text-align: center;
@@ -17,27 +121,27 @@ body, html {
 .grid {
     display: flex;
     flex-direction: column;
-    gap: 20px; 
-    align-items: center; 
+    gap: 20px;
+    align-items: center;
     margin-bottom: 30px;
 }
 
 .row {
     display: flex;
     justify-content: center;
-    gap: 10px; 
+    gap: 10px;
 }
 
 .cell {
-    width: 55px; 
-    height: 55px; 
+    width: 55px;
+    height: 55px;
     background-color: #3a3a3c;
-    border: none; 
+    border: none;
     border-radius: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.8rem; 
+    font-size: 1.8rem;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -48,28 +152,28 @@ body, html {
 }
 
 .indicator {
-    width: 55px; 
-    height: 55px; 
-    background-color: #565758; 
+    width: 55px;
+    height: 55px;
+    background-color: #565758;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
-    margin-left: 10px; 
+    margin-left: 10px;
 }
 
 
 #game-result {
     margin-top: 20px;
-    font-size: 1.5rem; 
+    font-size: 1.5rem;
     padding: 15px;
-    border-radius: 8px; 
+    border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.1);
 }
 
 .button-container {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
 }
 
 .restart-button {
@@ -137,19 +241,19 @@ body, html {
     margin: 20px 0;
 }
 
-.rules-content ul > li {
-    font-size: 1.2rem; 
-    margin: 10px 0; 
+.rules-content ul>li {
+    font-size: 1.2rem;
+    margin: 10px 0;
     line-height: 1.6;
 }
 
-.rules-content ul > ul {
+.rules-content ul>ul {
     padding-left: 25px;
     margin-top: 8px;
 }
 
-.rules-content ul > ul > li {
-    font-size: 1.1rem; 
+.rules-content ul>ul>li {
+    font-size: 1.1rem;
     color: #fff;
     margin: 8px 0;
 }
@@ -175,10 +279,12 @@ body, html {
         transform: scale(1);
         opacity: 1;
     }
+
     30% {
         transform: scale(1.1);
         opacity: 0.8;
     }
+
     100% {
         transform: scale(0);
         opacity: 0;
@@ -194,10 +300,12 @@ body, html {
         transform: scale(0);
         opacity: 0;
     }
+
     70% {
         transform: scale(1.1);
         opacity: 0.8;
     }
+
     100% {
         transform: scale(1);
         opacity: 1;

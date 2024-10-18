@@ -8,6 +8,16 @@ let currentRow = 0;
 let currentGuess = [];
 let gameOver = false;
 
+// START FOR CHANGING THEME MODE
+let modeToggle = document.querySelector('.mode-tog');
+let darkMode = document.querySelector('.dark-mode');
+
+modeToggle.addEventListener('click', () => {
+    darkMode.classList.toggle('active');
+    modeToggle.classList.toggle('active');
+})
+// END FOR CHANGING THEME MODE
+
 function generateSecretNumber() {
     let number = '';
     for (let i = 0; i < 5; i++) {
