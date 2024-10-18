@@ -5,102 +5,114 @@
     font-family: 'Arial', sans-serif;
 }
 
-:root {
-    --base-color: rgb(243, 234, 234);
-    --text-color: #111528;
-}
-
-.darkmode {
-    --base-color: #121213;
-    --text-color: beige;
-}
-
 body,
 html {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100vw;
     height: 100vh;
-    background-color: var(--base-color);
-    color: var(--text-color);
-    transition: background-color 0.8s, color 0.8s;
-    z-index: 1;
-}
-
-/* START FOR CHANGING THEME MODE */
-label {
-    width: 80px;
-    height: 80px;
-    background: red;
-    border-radius: 50%;
-    cursor: pointer;
+    overflow: hidden;
+    background-color: rgb(238, 232, 232);
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    top: 1%;
-    left: 94%;
-
 }
 
-input {
+/* START MODE */
+.mode-tog {
+    background-color: rgb(47, 46, 46);
     position: absolute;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    z-index: 2;
+    transition: 600;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+.mode-tog.active {
+    background-color: rgb(238, 232, 232);
+    transition: 600ms;
+    opacity: 1;
+}
+
+.container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 30px;
+    top: 30px;
+    width: 30px;
+    height: 30px;
+    /* background: #e8336f */
+}
+
+.dark-mode {
+    position: relative;
+    transform: scale(0);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 250vw;
+    height: 250vw;
+    border-radius: 50%;
+    background-color: #131313;
+    transition: 600ms ease-in-out;
+    display: flex;
+    flex: 0 0 auto;
+}
+
+.dark-mode.active {
+    transform: scale(1);
+    transition: 600ms ease-in-out;
+}
+
+.game-container,
+.mode-label {
+    color: rgb(238, 232, 232);
+    position: absolute;
+    mix-blend-mode: difference;
+}
+
+@media screen and (max-width: 600px) {
+    .dark-mode {
+        width: 250vh;
+        height: 250vh;
+    }
+}
+
+.icon {
+    font-size: 18px;
+    transition: opacity 0.5s ease;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.sun-icon {
+    color: #f0eee9;
+}
+
+.moon-icon {
     opacity: 0;
 }
 
-.sun {
-    position: absolute;
-    font-size: 3em;
-    color: #666;
-    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
-    transform: scale(0);
-    transition: .5s ease;
-    z-index: 10;
+.mode-tog.active .moon-icon {
+    opacity: 1;
 }
 
-input:checked~.sun {
-    transition-delay: 0.2s;
-    transform: scale(1) rotate(360deg);
+.mode-tog.active .sun-icon {
+    opacity: 0;
 }
-
-.moon {
-    font-size: 3em;
-    color: #666;
-    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
-    transition: .5s ease;
-    transition-delay: 0.2s;
-    z-index: 10;
-}
-
-input:checked~.moon {
-    transition-delay: 0s;
-    transform: rotate(360deg) scale(0);
-}
-
-
-.theme-effect {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    background-color: var(--base-color);
-    transition: background-color 0.8s, color 0.8s;
-    z-index: 1;
-}
-
-.darkmode .theme-effect {
-    background-color: var(--base-color);
-    transition: background-color 0.8s, color 0.8s;
-    z-index: 1;
-}
-
-/* END FOR CHANGING THEME MODE */
+/* END MODE */
 
 .game-container {
     text-align: center;
-    z-index: 1;
 }
 
 .grid {
@@ -129,7 +141,6 @@ input:checked~.moon {
     font-size: 1.8rem;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s, box-shadow 0.2s;
-    color: beige;
 }
 
 .cell:hover {
@@ -197,7 +208,7 @@ input:checked~.moon {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 1000;
 }
 
 .rules-content {
