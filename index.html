@@ -91,17 +91,51 @@
     </div>
     <div id="rules-screen" class="rules-modal">
         <div class="rules-content">
-            <h2>Game Rules</h2>
-            <ul>
-                <li>Try to guess the correct number within the allowed attempts.</li>
-                <li>The indicators will show how close you are to the correct number:</li>
+            <div class="level-rules rule-1" style="display: flex;">
+                <h2>Game Rules</h2>
+                <h4>Level: <span style="color: #f8cc1b;">Easy</span></h4>
                 <ul>
-                    <li><strong>Blue:</strong> How many of the numbers are in correct position. </li>
-                    <li><strong>Orange:</strong> How many of digits of the numbers belongs to the answer but are in
-                        wrong position.</li>
+                    <li>Try to guess the correct number within <span class="attempts-number">6</span> attempts.</li>
+                    <li>The digits that correspond to the correct answer will be highlighted:</li>
+                    <ul>
+                        <li><strong><span style="color: lightblue;">Blue</span>:</strong> This digit is in correct position. </li>
+                        <li><strong><span style="color: orange;">Orange</span>:</strong> This digit belongs to the correct answer but is in wrong position.</li>
+                    </ul>
                 </ul>
-            </ul>
-            <button id="skip-rules-button" class="skip-button">Skip</button>
+            </div>
+            <div class="level-rules rule-2" style="display: none;">
+                <h2>Game Rules</h2>
+                <h4>Level: <span style="color: #f37324;">Medium</span></h4>
+                <ul>
+                    <li>Try to guess the correct number within <span class="attempts-number">8</span> attempts.</li>
+                    <li>The indicators will show how close you are to the correct number, but will not tell you which number is it:</li>
+                    <ul>
+                        <li><strong><span style="color: lightblue;">Blue</span>:</strong> How many digits are in correct position. </li>
+                        <li><strong><span style="color: orange;">Orange</span>:</strong> How many digits belongs to the answer but are in wrong position.</li>
+                    </ul>
+                </ul>
+            </div>
+            <div class="level-rules rule-3" style="display: none;">
+                <h2>Game Rules</h2>
+                <h4>Level: <span style="color: #e12729;">Hard</span></h4>
+                <ul>
+                    <li>Try to guess the correct number within <span class="attempts-number">6</span> attempts.</li>
+                    <li>The indicators will show how close you are to the correct number, but will not tell you which number is it:</li>
+                    <ul>
+                        <li><strong><span style="color: lightblue;">Blue</span>:</strong> How many digits are in correct position. </li>
+                        <li><strong><span style="color: orange;">Orange</span>:</strong> How many digits belongs to the answer but are in wrong position.</li>
+                    </ul>
+                </ul>
+            </div>
+            <h3>Select difficulty</h3>
+            <div class="row">
+                <button id="level-1-color-button" class="level-buttons active">Level 1</button>
+                <button id="level-2-color-button" class="level-buttons">Level 2</button>
+                <button id="level-3-color-button" class="level-buttons">Level 3</button>
+            </div>
+            <div class="row">
+                <button id="skip-rules-button" class="skip-button">Start</button>
+            </div>
         </div>
     </div>
 
