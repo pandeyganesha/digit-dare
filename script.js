@@ -9,6 +9,15 @@ let currentGuess = [];
 let gameOver = false;
 
 let currentLevel = 1; // Default level
+// START FOR CHANGING THEME MODE
+let modeToggle = document.querySelector('.mode-tog');
+let darkMode = document.querySelector('.dark-mode');
+
+modeToggle.addEventListener('click', () => {
+    darkMode.classList.toggle('active');
+    modeToggle.classList.toggle('active');
+})
+// END FOR CHANGING THEME MODE
 
 function generateSecretNumber() {
     let number = '';
@@ -91,6 +100,9 @@ function handleRestart() {
     });
     grid.querySelectorAll('.indicator').forEach(indicator => indicator.style.backgroundColor = indicatorColor)
     resultDisplay.style.display = 'none';
+
+    // Remove focus from the restart button
+    restartButton.blur();
 }
 
 // Let player choose level

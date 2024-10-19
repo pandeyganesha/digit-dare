@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <title>Number Guessing Game</title>
 </head>
+
 <body>
+<!-- START FOR CHANGING THEME MODE -->
+    <div class="mode-tog">
+        <ion-icon name="sunny" class="icon sun-icon"></ion-icon>
+        <ion-icon name="moon" class="icon moon-icon"></ion-icon>
+    </div>
+    <div class="container">
+        <div class="dark-mode">
+        </div>
+    </div>
+<!-- END FOR CHANGING THEME MODE -->
+
     <div class="game-container">
         <div class="grid">
             <div class="row">
@@ -67,7 +82,7 @@
         </div>
 
         <div id="game-result" style="display: none;"></div>
-        
+
         <div class="button-container">
             <button class="restart-button">
                 <img src="restart-icon.svg" alt="Restart" class="restart-icon">
@@ -123,6 +138,8 @@
             </div>
         </div>
     </div>
+
+
     <script src="script.js"></script>
 </body>
 </html>
