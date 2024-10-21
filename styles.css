@@ -10,7 +10,7 @@ html {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background-color: rgb(238, 232, 232);
+    background-color: #eee8e8;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,9 +26,10 @@ html {
     width: 60px;
     height: 60px;
     z-index: 2;
-    transition: 600;
+    transition: 600ms;
     border-radius: 50%;
     opacity: 1;
+    /* background-color: #c2185b; */
 }
 
 .mode-tog.active {
@@ -42,10 +43,10 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
-    right: 30px;
-    top: 30px;
-    width: 30px;
-    height: 30px;
+    right: 35px;
+    top: 35px;
+    width: 55px;
+    height: 55px;
     /* background: #e8336f */
 }
 
@@ -60,7 +61,7 @@ html {
     height: 250vw;
     border-radius: 50%;
     background-color: rgba(18, 18, 19, 1)  ;
-    transition: 600ms ease-in-out;
+    transition: 600ms ease-in-out; 
     display: flex;
     flex: 0 0 auto;
 }
@@ -109,8 +110,8 @@ html {
 }
 
 .mode-tog.active .sun-icon {
-    opacity: 0;
     transition: 1s;
+    opacity: 0;
 }
 /* END MODE */
 
