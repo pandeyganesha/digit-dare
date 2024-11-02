@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <title>Number Guessing Game</title>
+  </head>
+
+  <body>
+    <!-- START FOR CHANGING THEME MODE -->
+    <div class="mode-tog">
+      <ion-icon name="sunny" class="icon sun-icon"></ion-icon>
+      <ion-icon name="moon" class="icon moon-icon"></ion-icon>
+    </div>
+    <div class="container">
+      <div class="dark-mode"></div>
+    </div>
+    <!-- END FOR CHANGING THEME MODE -->
+
+    <div class="game-container">
+      <div style="height: 100px"></div>
+      <div class="grid">
+        <div class="row">
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell indicator"></div>
+          <div class="cell indicator"></div>
+        </div>
+        <div class="row">
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell indicator"></div>
+          <div class="cell indicator"></div>
+        </div>
+        <div class="row">
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell indicator"></div>
+          <div class="cell indicator"></div>
+        </div>
+        <div class="row">
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell indicator"></div>
+          <div class="cell indicator"></div>
+        </div>
+        <div class="row">
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell indicator"></div>
+          <div class="cell indicator"></div>
+        </div>
+        <div class="row">
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell indicator"></div>
+          <div class="cell indicator"></div>
+        </div>
+      </div>
+
+      <div id="game-result" style="display: none"></div>
+
+      <div class="button-container">
+        <button class="restart-button">
+          <img src="restart-icon.svg" alt="Restart" class="restart-icon" />
+        </button>
+      </div>
+    </div>
+    <div id="rules-screen" class="rules-modal">
+      <div class="rules-content">
+        <div class="level-rules rule-1" style="display: flex">
+          <h2>Game Rules</h2>
+          <h4>Level: <span style="color: #f8cc1b">Easy</span></h4>
+          <ul>
+            <li>
+              Try to guess the correct number within
+              <span class="attempts-number">6</span> attempts.
+            </li>
+            <li>
+              The digits that correspond to the correct answer will be
+              highlighted:
+            </li>
+            <ul>
+              <li>
+                <strong><span style="color: lightblue">Blue</span>:</strong>
+                This digit is in correct position.
+              </li>
+              <li>
+                <strong><span style="color: orange">Orange</span>:</strong> This
+                digit belongs to the correct answer but is in wrong position.
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <div class="level-rules rule-2" style="display: none">
+          <h2>Game Rules</h2>
+          <h4>Level: <span style="color: #f37324">Medium</span></h4>
+          <ul>
+            <li>
+              Try to guess the correct number within
+              <span class="attempts-number">8</span> attempts.
+            </li>
+            <li>
+              The indicators will show how close you are to the correct number,
+              but will not tell you which number is it:
+            </li>
+            <ul>
+              <li>
+                <strong><span style="color: lightblue">Blue</span>:</strong> How
+                many digits are in correct position.
+              </li>
+              <li>
+                <strong><span style="color: orange">Orange</span>:</strong> How
+                many digits belongs to the answer but are in wrong position.
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <div class="level-rules rule-3" style="display: none">
+          <h2>Game Rules</h2>
+          <h4>Level: <span style="color: #e12729">Hard</span></h4>
+          <ul>
+            <li>
+              Try to guess the correct number within
+              <span class="attempts-number">6</span> attempts.
+            </li>
+            <li>
+              The indicators will show how close you are to the correct number,
+              but will not tell you which number is it:
+            </li>
+            <ul>
+              <li>
+                <strong><span style="color: lightblue">Blue</span>:</strong> How
+                many digits are in correct position.
+              </li>
+              <li>
+                <strong><span style="color: orange">Orange</span>:</strong> How
+                many digits belongs to the answer but are in wrong position.
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <h3>Select difficulty</h3>
+        <div class="row">
+          <button id="level-1-color-button" class="level-buttons active">
+            Level 1
+          </button>
+          <button id="level-2-color-button" class="level-buttons">
+            Level 2
+          </button>
+          <button id="level-3-color-button" class="level-buttons">
+            Level 3
+          </button>
+        </div>
+        <div class="row">
+          <button id="skip-rules-button" class="skip-button">Start</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

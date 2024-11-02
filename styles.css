@@ -1,0 +1,471 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body,
+html {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #eee8e8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* START MODE */
+.mode-tog {
+    background-color: rgb(238, 232, 232);
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    z-index: 2;
+    transition: 600ms;
+    border-radius: 50%;
+    opacity: 1;
+    /* background-color: #c2185b; */
+}
+
+.mode-tog.active {
+    background-color: rgba(18, 18, 19, 1);
+    transition: 600ms;
+    opacity: 1;
+}
+
+.container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 35px;
+    top: 35px;
+    width: 55px;
+    height: 55px;
+    /* background: #e8336f */
+}
+
+.dark-mode {
+    position: relative;
+    transform: scale(0);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 250vw;
+    height: 250vw;
+    border-radius: 50%;
+    background-color: rgba(18, 18, 19, 1)  ;
+    transition: 600ms ease-in-out; 
+    display: flex;
+    flex: 0 0 auto;
+}
+
+.dark-mode.active {
+    transform: scale(1);
+    transition: 600ms ease-in-out;
+}
+
+.game-container,
+.mode-label {
+    color: rgb(238, 232, 232);
+    position: absolute;
+    mix-blend-mode: difference;
+}
+
+.icon {
+    font-size: 45px;
+    transition: opacity 0.5s ease;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.sun-icon {
+    color: #232221;
+}
+
+.moon-icon {
+    opacity: 0;
+    color: #d4cdc6;
+}
+
+.mode-tog.active .moon-icon {
+    opacity: 1;
+    transition: 1s;
+}
+
+.mode-tog.active .sun-icon {
+    transition: 1s;
+    opacity: 0;
+}
+/* END MODE */
+
+.game-container {
+    text-align: center;
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px; 
+}
+
+.cell {
+    width: 55px;
+    height: 55px;
+    background-color: #3a3a3c;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cell:hover {
+    transform: translateY(-7px);
+    box-shadow: 4px 8px 12px rgba(0, 0, 0, 0.4);
+}
+
+.indicator {
+    width: 55px;
+    height: 55px;
+    background-color: #565758;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    margin-left: 10px;
+}
+
+
+#game-result {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.restart-button {
+    margin-top: 15px;
+    width: 60px;
+    height: 60px;
+    background-color: #565758;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.restart-button:hover {
+    background-color: #737373;
+}
+
+.restart-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.rules-modal {
+    position: fixed;
+    background-color: rgba(18, 18, 19, 1);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.rules-content {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 30px;
+    width: 80%;
+    height: auto;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    color: #f0f0f0;
+}
+
+.rule-1 , .rule-2 , .rule-3{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rules-content h2 {
+    font-size: 3rem;
+    color: #ffffff;
+    margin: 10px;
+}
+
+.rules-content h3 {
+    font-size: 2rem;
+    color: #ffffff;
+    margin: 0px;
+}
+
+.rules-content h4 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin: 0px;
+}
+
+.rules-content ul {
+    list-style-type: disc;
+    padding-left: 25px;
+    margin: 20px 0;
+}
+
+.rules-content ul>li {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.rules-content ul>ul {
+    padding-left: 25px;
+    margin-top: 8px;
+}
+
+.rules-content ul>ul>li {
+    font-size: 1.1rem;
+    color: #fff;
+    margin: 8px 0;
+}
+
+
+.skip-button {
+    margin-top: 30px;
+    font-size: xx-large;
+    font-weight: bold;
+    color: white;
+    padding: 12px 24px;
+    background-color: #e8336f;
+    border: none;
+    border-radius: 22.5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.attempts-number{
+    font-weight: bold;
+    color: #93dc5c;
+    font-size: 1.5rem;
+}
+
+.level-buttons {
+    margin: 20px;
+    font-size: large;
+    font-weight: bold;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#level-1-color-button {
+    background-color: #f8cc1b;
+}
+
+#level-2-color-button {
+    background-color: #f37324;
+}
+
+#level-3-color-button {
+    background-color: #e12729;
+}
+
+.skip-button:hover {
+    background-color: #c2185b;
+    transform: scale(1.15);
+}
+
+.level-buttons.active {
+    scale: 120%;
+    color: black;
+}
+
+.level-buttons:not(.active):hover {
+    transform: scale(1.2);
+}
+
+@keyframes shrink-bounce {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    30% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+.rules-modal.shrink {
+    animation: shrink-bounce .300s forwards ease-in-out;
+}
+
+@keyframes expand-bounce {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.rules-modal.expand {
+    animation: expand-bounce .500s forwards ease-in-out;
+}
+
+/* Responsive on mobile devices */
+/* small phone */
+@media screen and (max-width: 576px) {
+    .dark-mode {
+        width: 250vh;
+        height: 250vh;
+        transition: 500ms ease-in-out;
+    }
+
+    .row {
+        gap: 5px;
+    }
+
+    .cell {
+        width: 40px;
+        height: 40px;
+    }
+
+    .rules-modal {
+        padding: 5px;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .rules-content {
+        width: 100%;
+        max-height: auto;
+    }
+
+    .rules-content h2 {
+        font-size: 30px;
+    }
+
+    .rules-content h3 {
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+
+    .rules-content h4 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .rules-content ul>li {
+        font-size: 1rem;
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .rules-content ul>ul>li {
+        font-size: 1rem;
+        color: #fff;
+        margin: 8px 0;
+    }
+
+    .level-buttons {
+        font-size: 15px;
+        width: 70px;
+        height: 45px;
+        padding: 5px 0 5px 0;
+        margin: 5px;
+    }
+
+    .level-buttons .skip-button {
+        font-size: 15px;
+        width: 70px;
+        height: 45px;
+        padding: 5px 0 5px 0;
+        margin: 5px;
+    }
+}
+
+/* iPad mini*/
+@media screen and (min-width: 768px) {
+    .dark-mode {
+        width: 250vh;
+        height: 250vh;
+        transition: 600ms ease-in-out;
+    }
+
+    .icon {
+        font-size: 60px;
+    }
+
+}
+
+/* iPad to big screen*/
+@media screen and (min-width: 992px) {
+    .dark-mode {
+        width: 500vw;
+        height: 500vw;
+        transition: 1000ms ease-in-out;
+    }
+
+    .mode-tog {
+        transition: 1000ms ease-in-out;
+    }
+}
