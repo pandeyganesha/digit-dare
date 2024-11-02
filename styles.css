@@ -60,8 +60,8 @@ html {
     width: 250vw;
     height: 250vw;
     border-radius: 50%;
-    background-color: rgba(18, 18, 19, 1)  ;
-    transition: 600ms ease-in-out; 
+    background-color: rgba(18, 18, 19, 1);
+    transition: 600ms ease-in-out;
     display: flex;
     flex: 0 0 auto;
 }
@@ -76,13 +76,6 @@ html {
     color: rgb(238, 232, 232);
     position: absolute;
     mix-blend-mode: difference;
-}
-
-@media screen and (max-width: 600px) {
-    .dark-mode {
-        width: 250vh;
-        height: 250vh;
-    }
 }
 
 .icon {
@@ -113,6 +106,7 @@ html {
     transition: 1s;
     opacity: 0;
 }
+
 /* END MODE */
 
 .game-container {
@@ -130,7 +124,7 @@ html {
 .row {
     display: flex;
     justify-content: space-evenly;
-    gap: 10px; 
+    gap: 10px;
 }
 
 .cell {
@@ -230,7 +224,9 @@ html {
     color: #f0f0f0;
 }
 
-.rule-1 , .rule-2 , .rule-3{
+.rule-1,
+.rule-2,
+.rule-3 {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -292,7 +288,7 @@ html {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.attempts-number{
+.attempts-number {
     font-weight: bold;
     color: #93dc5c;
     font-size: 1.5rem;
@@ -376,4 +372,107 @@ html {
 
 .rules-modal.expand {
     animation: expand-bounce .500s forwards ease-in-out;
+}
+
+/* Responsive on mobile devices */
+/* small phone */
+@media screen and (max-width: 576px) {
+    .dark-mode {
+        width: 250vh;
+        height: 250vh;
+        transition: 500ms ease-in-out;
+    }
+
+    .row {
+        gap: 5px;
+    }
+
+    .cell {
+        width: 40px;
+        height: 40px;
+    }
+
+    .rules-modal {
+        padding: 5px;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .rules-content {
+        width: 100%;
+        max-height: auto;
+    }
+
+    .rules-content h2 {
+        font-size: 30px;
+    }
+
+    .rules-content h3 {
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+
+    .rules-content h4 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .rules-content ul>li {
+        font-size: 1rem;
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .rules-content ul>ul>li {
+        font-size: 1rem;
+        color: #fff;
+        margin: 8px 0;
+    }
+
+    .level-buttons {
+        font-size: 15px;
+        width: 70px;
+        height: 45px;
+        padding: 5px 0 5px 0;
+        margin: 5px;
+    }
+
+    .level-buttons .skip-button {
+        font-size: 15px;
+        width: 70px;
+        height: 45px;
+        padding: 5px 0 5px 0;
+        margin: 5px;
+    }
+}
+
+/* iPad mini*/
+@media screen and (min-width: 768px) {
+    .dark-mode {
+        width: 250vh;
+        height: 250vh;
+        transition: 600ms ease-in-out;
+    }
+
+    .icon {
+        font-size: 60px;
+    }
+
+}
+
+/* iPad to big screen*/
+@media screen and (min-width: 992px) {
+    .dark-mode {
+        width: 500vw;
+        height: 500vw;
+        transition: 1000ms ease-in-out;
+    }
+
+    .mode-tog {
+        transition: 1000ms ease-in-out;
+    }
+
+    .mode-tog.active {
+        transition: 1000ms ease-in-out;
+    }
 }
