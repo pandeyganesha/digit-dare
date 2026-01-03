@@ -49,7 +49,7 @@ function checkGuess() {
             secretDigits[index] = null; // Mark as used
             guessDigits[index] = null;
             if (currentLevel ===1){ 
-                row.querySelectorAll(".cell")[index].style.backgroundColor = "lightblue"; // Let player know which digit is in correct position
+                row.querySelectorAll(".cell")[index].style.backgroundColor = "#31a733"; // Let player know which digit is in correct position
             }
         }
     });
@@ -60,7 +60,7 @@ function checkGuess() {
             let secretIndex = secretDigits.indexOf(digit);
             secretDigits[secretIndex] = null; // Mark as used
             if (currentLevel === 1){
-               row.querySelectorAll(".cell")[index].style.backgroundColor = "orange"; // Let player know which digit is correct but in wrong position
+               row.querySelectorAll(".cell")[index].style.backgroundColor = "#a9c21bff"; // Let player know which digit is correct but in wrong position
             }
         }
     });
