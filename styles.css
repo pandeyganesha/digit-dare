@@ -285,7 +285,7 @@ html {
     font-weight: bold;
     color: white;
     padding: 12px 24px;
-    background-color: #e8336f;
+    background-color: #9a5d63;
     border: none;
     border-radius: 22.5px;
     cursor: pointer;
@@ -294,13 +294,13 @@ html {
 
 .attempts-number{
     font-weight: bold;
-    color: #93dc5c;
+    color: #49ae66;
     font-size: 1.5rem;
 }
 
 .level-buttons {
     margin: 20px;
-    font-size: large;
+    font-size: large;   
     font-weight: bold;
     color: white;
     padding: 12px 24px;
@@ -311,19 +311,19 @@ html {
 }
 
 #level-1-color-button {
-    background-color: #f8cc1b;
+    background-color: #6BB6CC ;
 }
 
 #level-2-color-button {
-    background-color: #f37324;
+    background-color: #2F6FE4;
 }
 
 #level-3-color-button {
-    background-color: #e12729;
+    background-color: #2563EB;
 }
 
 .skip-button:hover {
-    background-color: #c2185b;
+    background-color: #f15111;
     transform: scale(1.15);
 }
 
