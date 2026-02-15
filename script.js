@@ -11,12 +11,23 @@ let currentLevel = 1; // Default level
 // START FOR CHANGING THEME MODE
 let modeToggle = document.querySelector('.mode-tog');
 let darkMode = document.querySelector('.dark-mode');
+let isThemeAnimating = false;
+const THEME_ANIMATION_MS = 600;
 
 modeToggle.addEventListener('click', () => {
+    if (isThemeAnimating) return;
+
+    isThemeAnimating = true;
+    const switchingToDark = !modeToggle.classList.contains('active');
+
     darkMode.classList.toggle('active');
     modeToggle.classList.toggle('active');
-    document.body.classList.toggle('dark-theme');
-})
+
+    setTimeout(() => {
+        document.body.classList.toggle('dark-theme', switchingToDark);
+        isThemeAnimating = false;
+    }, THEME_ANIMATION_MS);
+});
 // END FOR CHANGING THEME MODE
 
 function generateSecretNumber() {
