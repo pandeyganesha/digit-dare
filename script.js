@@ -1,7 +1,6 @@
 const grid = document.querySelector('.grid');
 const resultDisplay = document.getElementById('game-result');
 const restartButton = document.querySelector('.restart-button');
-const indicatorColor = grid.querySelectorAll('.row')[0].querySelectorAll('.indicator')[0].style.backgroundColor;
 
 let secretNumber = generateSecretNumber();
 let currentRow = 0;
@@ -12,10 +11,21 @@ let currentLevel = 1; // Default level
 // START FOR CHANGING THEME MODE
 let modeToggle = document.querySelector('.mode-tog');
 let darkMode = document.querySelector('.dark-mode');
+let isThemeAnimating = false;
 
 modeToggle.addEventListener('click', () => {
+    if (isThemeAnimating) return;
+
+    isThemeAnimating = true;
+    const switchingToDark = !modeToggle.classList.contains('active');
+
     darkMode.classList.toggle('active');
     modeToggle.classList.toggle('active');
+
+    setTimeout(() => {
+        document.body.classList.toggle('dark-theme', switchingToDark);
+        isThemeAnimating = false;
+    }, 600);
 })
 // END FOR CHANGING THEME MODE
 
@@ -49,7 +59,7 @@ function checkGuess() {
             secretDigits[index] = null; // Mark as used
             guessDigits[index] = null;
             if (currentLevel ===1){ 
-                row.querySelectorAll(".cell")[index].style.backgroundColor = "lightblue"; // Let player know which digit is in correct position
+                row.querySelectorAll(".cell")[index].style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--feedback-correct').trim(); // Let player know which digit is in correct position
             }
         }
     });
@@ -60,15 +70,15 @@ function checkGuess() {
             let secretIndex = secretDigits.indexOf(digit);
             secretDigits[secretIndex] = null; // Mark as used
             if (currentLevel === 1){
-               row.querySelectorAll(".cell")[index].style.backgroundColor = "orange"; // Let player know which digit is correct but in wrong position
+               row.querySelectorAll(".cell")[index].style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--feedback-present').trim(); // Let player know which digit is correct but in wrong position
             }
         }
     });
 
     rowIndicators[0].textContent = correctPositions;
-    rowIndicators[0].style.backgroundColor = 'lightblue';
+    rowIndicators[0].style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--feedback-correct').trim();
     rowIndicators[1].textContent = correctNumbers;
-    rowIndicators[1].style.backgroundColor = 'orange'
+    rowIndicators[1].style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--feedback-present').trim()
 
     if (correctPositions === 5) {
       endGame(true); // Player won
@@ -96,9 +106,11 @@ function handleRestart() {
     gameOver = false;
     grid.querySelectorAll('.cell').forEach(cell => {
         cell.textContent = '';
-        cell.style.backgroundColor = "#3a3a3c"; // Change to default background color
+        cell.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--cell-bg').trim(); // Change to default background color
     });
-    grid.querySelectorAll('.indicator').forEach(indicator => indicator.style.backgroundColor = indicatorColor)
+    grid.querySelectorAll('.indicator').forEach(indicator => {
+        indicator.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--indicator-bg').trim();
+    })
     resultDisplay.style.display = 'none';
 
     // Remove focus from the restart button
