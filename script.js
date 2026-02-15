@@ -12,6 +12,7 @@ let currentLevel = 1; // Default level
 let modeToggle = document.querySelector('.mode-tog');
 let darkMode = document.querySelector('.dark-mode');
 let isThemeAnimating = false;
+const THEME_ANIMATION_MS = 600;
 
 modeToggle.addEventListener('click', () => {
     if (isThemeAnimating) return;
@@ -25,8 +26,8 @@ modeToggle.addEventListener('click', () => {
     setTimeout(() => {
         document.body.classList.toggle('dark-theme', switchingToDark);
         isThemeAnimating = false;
-    }, 600);
-})
+    }, THEME_ANIMATION_MS);
+});
 // END FOR CHANGING THEME MODE
 
 function generateSecretNumber() {
