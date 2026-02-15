@@ -5,20 +5,80 @@
     font-family: 'Arial', sans-serif;
 }
 
+:root {
+    --bg-gradient: linear-gradient(135deg, #f8f5ff 0%, #eef8ff 100%);
+    --text-color: #1f2937;
+    --muted-text: #4b5563;
+    --surface: rgba(255, 255, 255, 0.78);
+    --surface-strong: #ffffff;
+    --surface-border: rgba(148, 163, 184, 0.35);
+    --shadow-color: rgba(15, 23, 42, 0.18);
+
+    --cell-bg: #dbe4f0;
+    --cell-text: #0f172a;
+    --indicator-bg: #c9d3e4;
+
+    --feedback-correct: #3ba3ff;
+    --feedback-present: #ff9a3c;
+
+    --button-bg: #334155;
+    --button-hover: #1f2937;
+
+    --mode-bg: #ffffff;
+    --mode-icon-sun: #f59e0b;
+    --mode-icon-moon: #64748b;
+
+    --modal-overlay: rgba(15, 23, 42, 0.85);
+    --modal-bg: #ffffff;
+    --modal-text: #1f2937;
+    --result-bg: rgba(148, 163, 184, 0.18);
+}
+
+body.dark-theme {
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #111827 45%, #1f2937 100%);
+    --text-color: #e2e8f0;
+    --muted-text: #94a3b8;
+    --surface: rgba(15, 23, 42, 0.6);
+    --surface-strong: #182235;
+    --surface-border: rgba(148, 163, 184, 0.2);
+    --shadow-color: rgba(2, 6, 23, 0.6);
+
+    --cell-bg: #243044;
+    --cell-text: #f8fafc;
+    --indicator-bg: #334155;
+
+    --feedback-correct: #38bdf8;
+    --feedback-present: #f59e0b;
+
+    --button-bg: #334155;
+    --button-hover: #475569;
+
+    --mode-bg: #0f172a;
+    --mode-icon-sun: #fbbf24;
+    --mode-icon-moon: #e2e8f0;
+
+    --modal-overlay: rgba(2, 6, 23, 0.92);
+    --modal-bg: #182235;
+    --modal-text: #e2e8f0;
+    --result-bg: rgba(71, 85, 105, 0.35);
+}
+
 body,
 html {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background-color: #eee8e8;
+    background: var(--bg-gradient);
+    color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: background 300ms ease, color 300ms ease;
 }
 
 /* START MODE */
 .mode-tog {
-    background-color: rgb(238, 232, 232);
+    background-color: var(--mode-bg);
     position: absolute;
     right: 30px;
     top: 30px;
@@ -26,16 +86,14 @@ html {
     width: 60px;
     height: 60px;
     z-index: 2;
-    transition: 600ms;
     border-radius: 50%;
-    opacity: 1;
-    /* background-color: #c2185b; */
+    border: 1px solid var(--surface-border);
+    box-shadow: 0 8px 25px var(--shadow-color);
+    transition: 300ms ease;
 }
 
 .mode-tog.active {
-    background-color: rgba(18, 18, 19, 1);
-    transition: 600ms;
-    opacity: 1;
+    background-color: var(--mode-bg);
 }
 
 .container {
@@ -47,7 +105,6 @@ html {
     top: 35px;
     width: 55px;
     height: 55px;
-    /* background: #e8336f */
 }
 
 .dark-mode {
@@ -60,22 +117,20 @@ html {
     width: 250vw;
     height: 250vw;
     border-radius: 50%;
-    background-color: rgba(18, 18, 19, 1)  ;
-    transition: 600ms ease-in-out; 
+    background-color: #0f172a;
+    transition: 600ms ease-in-out;
     display: flex;
     flex: 0 0 auto;
+    opacity: 0.4;
 }
 
 .dark-mode.active {
     transform: scale(1);
-    transition: 600ms ease-in-out;
 }
 
 .game-container,
 .mode-label {
-    color: rgb(238, 232, 232);
     position: absolute;
-    mix-blend-mode: difference;
 }
 
 @media screen and (max-width: 600px) {
@@ -96,12 +151,12 @@ html {
 }
 
 .sun-icon {
-    color: #232221;
+    color: var(--mode-icon-sun);
 }
 
 .moon-icon {
     opacity: 0;
-    color: #d4cdc6;
+    color: var(--mode-icon-moon);
 }
 
 .mode-tog.active .moon-icon {
@@ -113,10 +168,17 @@ html {
     transition: 1s;
     opacity: 0;
 }
+
 /* END MODE */
 
 .game-container {
     text-align: center;
+    padding: 24px;
+    border-radius: 24px;
+    background: var(--surface);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--surface-border);
+    box-shadow: 0 14px 30px var(--shadow-color);
 }
 
 .grid {
@@ -130,46 +192,43 @@ html {
 .row {
     display: flex;
     justify-content: space-evenly;
-    gap: 10px; 
+    gap: 10px;
 }
 
 .cell {
     width: 55px;
     height: 55px;
-    background-color: #3a3a3c;
-    border: none;
-    border-radius: 6px;
+    background-color: var(--cell-bg);
+    color: var(--cell-text);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.8rem;
-    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 14px var(--shadow-color);
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .cell:hover {
-    transform: translateY(-7px);
-    box-shadow: 4px 8px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 18px var(--shadow-color);
 }
 
 .indicator {
     width: 55px;
     height: 55px;
-    background-color: #565758;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: var(--indicator-bg);
     font-size: 1.2rem;
     margin-left: 10px;
 }
-
 
 #game-result {
     margin-top: 20px;
     font-size: 1.5rem;
     padding: 15px;
     border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--result-bg);
 }
 
 .button-container {
@@ -181,12 +240,11 @@ html {
     margin-top: 15px;
     width: 60px;
     height: 60px;
-    background-color: #565758;
+    background-color: var(--button-bg);
     color: #fff;
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    /* display: flex; */
     justify-content: center;
     align-items: center;
     font-size: 1rem;
@@ -194,7 +252,7 @@ html {
 }
 
 .restart-button:hover {
-    background-color: #737373;
+    background-color: var(--button-hover);
 }
 
 .restart-icon {
@@ -204,7 +262,7 @@ html {
 
 .rules-modal {
     position: fixed;
-    background-color: rgba(18, 18, 19, 1);
+    background-color: var(--modal-overlay);
     top: 0;
     left: 0;
     width: 100%;
@@ -216,7 +274,7 @@ html {
 }
 
 .rules-content {
-    background-color: #1e1e1e;
+    background-color: var(--modal-bg);
     padding: 30px;
     border-radius: 30px;
     width: 80%;
@@ -227,10 +285,12 @@ html {
     justify-content: center;
     align-items: center;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-    color: #f0f0f0;
+    color: var(--modal-text);
 }
 
-.rule-1 , .rule-2 , .rule-3{
+.rule-1,
+.rule-2,
+.rule-3 {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -239,19 +299,19 @@ html {
 
 .rules-content h2 {
     font-size: 3rem;
-    color: #ffffff;
+    color: var(--modal-text);
     margin: 10px;
 }
 
 .rules-content h3 {
     font-size: 2rem;
-    color: #ffffff;
+    color: var(--modal-text);
     margin: 0px;
 }
 
 .rules-content h4 {
     font-size: 1.5rem;
-    color: #ffffff;
+    color: var(--modal-text);
     margin: 0px;
 }
 
@@ -274,10 +334,9 @@ html {
 
 .rules-content ul>ul>li {
     font-size: 1.1rem;
-    color: #fff;
+    color: var(--modal-text);
     margin: 8px 0;
 }
-
 
 .skip-button {
     margin-top: 30px;
@@ -292,7 +351,7 @@ html {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.attempts-number{
+.attempts-number {
     font-weight: bold;
     color: #93dc5c;
     font-size: 1.5rem;
