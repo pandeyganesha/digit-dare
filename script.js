@@ -1,20 +1,169 @@
+const DIGIT_COUNT = 5;
+
+// Single source of truth for how each difficulty behaves, instead of
+// scattered magic numbers (currentRow === 5, currentRow === 7, etc.)
+const LEVELS = {
+    1: { attempts: 6, rowGap: '25px', showIndicators: false, showPerDigitFeedback: true },
+    2: { attempts: 8, rowGap: '10px', showIndicators: true, showPerDigitFeedback: false },
+    3: { attempts: 6, rowGap: '10px', showIndicators: true, showPerDigitFeedback: false },
+};
+
 const grid = document.querySelector('.grid');
 const resultDisplay = document.getElementById('game-result');
 const restartButton = document.querySelector('.restart-button');
+const rulesModal = document.querySelector('.rules-modal');
+const skipButton = document.querySelector('.skip-button');
+const levelButtons = document.querySelectorAll('.level-buttons');
+const levelRules = document.querySelectorAll('.level-rules');
 
+let currentLevel = 1;
 let secretNumber = generateSecretNumber();
 let currentRow = 0;
 let currentGuess = [];
 let gameOver = false;
+let gameStarted = false; // input is ignored until the rules modal is dismissed
 
-let currentLevel = 1; // Default level
-// START FOR CHANGING THEME MODE
-let modeToggle = document.querySelector('.mode-tog');
-let darkMode = document.querySelector('.dark-mode');
-let isThemeAnimating = false;
+function generateSecretNumber() {
+    let number = '';
+    for (let i = 0; i < DIGIT_COUNT; i++) {
+        number += Math.floor(Math.random() * 10);
+    }
+    return number;
+}
+
+function buildGrid(level) {
+    const config = LEVELS[level];
+    grid.innerHTML = '';
+
+    for (let r = 0; r < config.attempts; r++) {
+        const row = document.createElement('div');
+        row.classList.add('row');
+        row.style.gap = config.rowGap;
+
+        for (let c = 0; c < DIGIT_COUNT; c++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            row.appendChild(cell);
+        }
+
+        if (config.showIndicators) {
+            const correctIndicator = document.createElement('div');
+            correctIndicator.classList.add('cell', 'indicator', 'indicator-correct');
+            row.appendChild(correctIndicator);
+
+            const presentIndicator = document.createElement('div');
+            presentIndicator.classList.add('cell', 'indicator', 'indicator-present');
+            row.appendChild(presentIndicator);
+        }
+
+        grid.appendChild(row);
+    }
+}
+
+function updateGrid() {
+    const cells = grid.querySelectorAll('.row')[currentRow].querySelectorAll('.cell:not(.indicator)');
+    cells.forEach((cell, index) => {
+        cell.textContent = currentGuess[index] || '';
+    });
+}
+
+function checkGuess() {
+    const config = LEVELS[currentLevel];
+    const row = grid.querySelectorAll('.row')[currentRow];
+    const cells = row.querySelectorAll('.cell:not(.indicator)');
+
+    let correctPositions = 0;
+    let correctNumbers = 0;
+    const secretDigits = secretNumber.split('');
+    const guessDigits = [...currentGuess];
+
+    guessDigits.forEach((digit, index) => {
+        if (digit === secretDigits[index]) {
+            correctPositions++;
+            secretDigits[index] = null; // Mark as used
+            guessDigits[index] = null;
+            if (config.showPerDigitFeedback) {
+                cells[index].classList.add('correct'); // Digit is in the correct position
+            }
+        }
+    });
+
+    guessDigits.forEach((digit, index) => {
+        if (digit && secretDigits.includes(digit)) {
+            correctNumbers++;
+            const secretIndex = secretDigits.indexOf(digit);
+            secretDigits[secretIndex] = null; // Mark as used
+            if (config.showPerDigitFeedback) {
+                cells[index].classList.add('present'); // Digit exists but is in the wrong position
+            }
+        }
+    });
+
+    if (config.showIndicators) {
+        row.querySelector('.indicator-correct').textContent = correctPositions;
+        row.querySelector('.indicator-present').textContent = correctNumbers;
+    }
+
+    if (correctPositions === DIGIT_COUNT) {
+        endGame(true);
+    } else if (currentRow === config.attempts - 1) {
+        endGame(false);
+    } else {
+        currentRow++;
+        currentGuess = [];
+    }
+}
+
+function endGame(won) {
+    gameOver = true;
+    resultDisplay.textContent = won ? 'You Won! 🎉' : `You Lost! 😞 The number was ${secretNumber}.`;
+    resultDisplay.classList.add('visible');
+}
+
+function handleRestart() {
+    secretNumber = generateSecretNumber();
+    currentRow = 0;
+    currentGuess = [];
+    gameOver = false;
+    buildGrid(currentLevel);
+    resultDisplay.classList.remove('visible');
+    restartButton.blur();
+}
+
+levelButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        levelButtons.forEach((btn) => btn.classList.remove('active'));
+        levelRules.forEach((rule) => rule.classList.remove('active'));
+        button.classList.add('active');
+        levelRules[index].classList.add('active');
+        currentLevel = index + 1;
+    });
+});
+
+document.addEventListener('keydown', (e) => {
+    if (!gameStarted || gameOver) return;
+
+    if (e.key >= '0' && e.key <= '9') {
+        if (currentGuess.length < DIGIT_COUNT) {
+            currentGuess.push(e.key);
+            updateGrid();
+        }
+    } else if (e.key === 'Backspace') {
+        currentGuess.pop();
+        updateGrid();
+    } else if (e.key === 'Enter' && currentGuess.length === DIGIT_COUNT) {
+        checkGuess();
+    }
+});
+
+restartButton.addEventListener('click', handleRestart);
+
+const modeToggle = document.querySelector('.mode-tog');
+const darkMode = document.querySelector('.dark-mode');
 const THEME_ANIMATION_MS = 600;
+let isThemeAnimating = false;
 
-modeToggle.addEventListener('click', () => {
+function toggleDarkMode() {
     if (isThemeAnimating) return;
 
     isThemeAnimating = true;
@@ -27,173 +176,28 @@ modeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-theme', switchingToDark);
         isThemeAnimating = false;
     }, THEME_ANIMATION_MS);
-});
-// END FOR CHANGING THEME MODE
-
-function generateSecretNumber() {
-    let number = '';
-    for (let i = 0; i < 5; i++) {
-        number += Math.floor(Math.random() * 10); // Generate a random number between 0 and 9
-    }
-    return number;
 }
 
-function updateGrid() {
-    const rowCells = grid.querySelectorAll('.row')[currentRow].querySelectorAll('.cell');
-    rowCells.forEach((cell, index) => {
-        cell.textContent = currentGuess[index] || '';
-    });
-}
-
-function checkGuess() {
-    const rowIndicators = grid.querySelectorAll('.row')[currentRow].querySelectorAll('.indicator');
-    let correctPositions = 0;
-    let correctNumbers = 0;
-    let secretDigits = secretNumber.split('');
-    let guessDigits = [...currentGuess];
-
-    let row = grid.querySelectorAll('.row')[currentRow];
-
-    guessDigits.forEach((digit, index) => {
-        if (digit === secretDigits[index]) {
-            correctPositions++;
-            secretDigits[index] = null; // Mark as used
-            guessDigits[index] = null;
-            if (currentLevel ===1){ 
-                row.querySelectorAll(".cell")[index].style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--feedback-correct').trim(); // Let player know which digit is in correct position
-            }
-        }
-    });
-
-    guessDigits.forEach((digit, index) => {
-        if (digit && secretDigits.includes(digit)) {
-            correctNumbers++;
-            let secretIndex = secretDigits.indexOf(digit);
-            secretDigits[secretIndex] = null; // Mark as used
-            if (currentLevel === 1){
-               row.querySelectorAll(".cell")[index].style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--feedback-present').trim(); // Let player know which digit is correct but in wrong position
-            }
-        }
-    });
-
-    rowIndicators[0].textContent = correctPositions;
-    rowIndicators[0].style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--feedback-correct').trim();
-    rowIndicators[1].textContent = correctNumbers;
-    rowIndicators[1].style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--feedback-present').trim()
-
-    if (correctPositions === 5) {
-      endGame(true); // Player won
-    } else if ((currentLevel === 1 || currentLevel === 3) && currentRow === 5) {
-      endGame(false); // Player lost
-    } else if (currentLevel === 2 && currentRow === 7) { // Only Medium level has 8 attempts (rows)
-      endGame(false); // Player lost
-    } else {
-      currentRow++;
-      currentGuess = [];
-    }
-}
-
-function endGame(won) {
-    gameOver = true;
-    resultDisplay.textContent = won ? 'You Won! 🎉' : `You Lost! 😞 The number was ${secretNumber}.`;
-    resultDisplay.style.display = 'block'; // Show the result message
-    restartButton.style.display = 'block'; // Show the restart button
-}
-
-function handleRestart() {
-    secretNumber = generateSecretNumber();
-    currentRow = 0;
-    currentGuess = [];
-    gameOver = false;
-    grid.querySelectorAll('.cell').forEach(cell => {
-        cell.textContent = '';
-        cell.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--cell-bg').trim(); // Change to default background color
-    });
-    grid.querySelectorAll('.indicator').forEach(indicator => {
-        indicator.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--indicator-bg').trim();
-    })
-    resultDisplay.style.display = 'none';
-
-    // Remove focus from the restart button
-    restartButton.blur();
-}
-
-// Let player choose level
-const level_buttons = document.querySelectorAll('.level-buttons');
-const level_rules = document.querySelectorAll('.level-rules');
-
-level_buttons.forEach((button, index) => {
-  button.addEventListener("click", function () {
-    level_buttons.forEach((btn) => btn.classList.remove("active"));
-    level_rules.forEach((lv) => lv.style.display = 'none');
-    this.classList.add("active");
-    level_rules[index].style.display = 'flex';
-    currentLevel = index + 1;
-  });
-});
-
-function applyRules (){
-    // Level Medium: same as level Hard but add two more attempts
-    if (currentLevel === 2) {
-        for (let i = 0; i < 2; i++) {
-            const newRow = document.createElement("div");
-            newRow.classList.add("row");
-            for (let j = 0; j < 7; j++) {
-                const cell = document.createElement("div");
-                cell.classList.add("cell");
-                if (j >= 5) {
-                cell.classList.add("indicator");
-                }
-                newRow.appendChild(cell);
-            }
-            document.querySelector(".grid").appendChild(newRow);
-        }
-    } else if (currentLevel === 1){
-        const rows = document.querySelectorAll(".row");
-        rows.forEach(row => {
-            const indicators = row.querySelectorAll(".cell.indicator");
-            indicators.forEach(indicator => {
-                indicator.style.display = "none";
-            });
-            row.style.gap = '25px';
-        });
-    }
-}
-
-document.addEventListener('keydown', (e) => {
-    if (gameOver) return;
-    if (e.key >= '0' && e.key <= '9') {
-        if (currentGuess.length < 5) {
-            currentGuess.push(e.key);
-            updateGrid();
-        }
-    } else if (e.key === 'Backspace') {
-        currentGuess.pop();
-        updateGrid();
-    } else if (e.key === 'Enter' && currentGuess.length === 5) {
-        checkGuess();
+modeToggle.addEventListener('click', toggleDarkMode);
+modeToggle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleDarkMode();
     }
 });
-
-restartButton.addEventListener('click', handleRestart);
-
-window.addEventListener('load', () => {
-    const rulesModal = document.querySelector('.rules-modal');
-    rulesModal.classList.add('expand');
-    rulesModal.style.display = 'flex';
-});
-
-const skipButton = document.querySelector('.skip-button');
-const rulesModal = document.querySelector('.rules-modal');
 
 skipButton.addEventListener('click', () => {
-    if (rulesModal.classList.contains('expand')) {
-        rulesModal.classList.remove('expand');
-    }
-
+    rulesModal.classList.remove('expand');
     rulesModal.classList.add('shrink');
-    applyRules();
+    buildGrid(currentLevel);
+    gameStarted = true;
+
     setTimeout(() => {
         rulesModal.style.display = 'none';
     }, 300);
+});
+
+window.addEventListener('load', () => {
+    rulesModal.classList.add('expand');
+    rulesModal.style.display = 'flex';
 });
