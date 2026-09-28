@@ -1,12 +1,38 @@
-import { useState } from 'react'
-import Box from '@mui/material/Box'
-import './App.css'
+import { Box, ThemeProvider, createTheme } from '@mui/system'
+
+const theme = createTheme({
+  palette: {
+    background: {
+      primary: 'rgb(217, 238, 233)'
+    },
+    text: {
+      primary: '#173A5E',
+      secondary: '#46505A',
+    },
+  },
+})
 
 function App() {
   return (
-    <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-      This Box renders as an HTML section element.
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          minHeight: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        >
+          <Box
+            sx = {{
+              bgcolor: 'background.primary',
+              boxShadow: 1,
+              borderRadius: 2,
+              width: '60vh',
+              height: '60vh',
+            }}/>
+      </Box>
+    </ThemeProvider>
   );
 }
 
